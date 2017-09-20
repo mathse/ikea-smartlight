@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 #!/usr/bin/env python
 
 # file        : tradfri-status.py
@@ -8,6 +9,7 @@
 # version     : v1.1.0
 #
 # changelog   :
+# - v1.1.1      fix for unicode names                                   (mathse)
 # - v1.1.0      refactor for cleaner code                               (harald)
 # - v1.0.0      initial concept                                         (harald)
 
@@ -66,11 +68,11 @@ def main():
         try:
             if lightbulb[_]["3311"][0]["5850"] == 0:
                 print('bulb ID {}, name: {}, brightness: {}, state: off'
-                      .format(lightbulb[_]["9003"], lightbulb[_]["9001"],
+                      .format(lightbulb[_]["9003"], lightbulb[_]["9001"].encode('utf-8'),
                               lightbulb[_]["3311"][0]["5851"]))
             else:
                 print('bulb ID {}, name: {}, brightness: {}, state: on'
-                      .format(lightbulb[_]["9003"], lightbulb[_]["9001"],
+                      .format(lightbulb[_]["9003"], lightbulb[_]["9001"].encode('utf-8'),
                               lightbulb[_]["3311"][0]["5851"]))
         except KeyError:
             # device is not a lightbulb but a remote control, dimmer or sensor
@@ -81,10 +83,10 @@ def main():
     for _ in range(len(lightgroup)):
         if lightgroup[_]["5850"] == 0:
             print('group ID: {}, name: {}, state: off'
-                  .format(lightgroup[_]["9003"], lightgroup[_]["9001"]))
+                  .format(lightgroup[_]["9003"], lightgroup[_]["9001"].encode('utf-8')))
         else:
             print('group ID: {}, name: {}, state: on'
-                  .format(lightgroup[_]["9003"], lightgroup[_]["9001"]))
+                  .format(lightgroup[_]["9003"], lightgroup[_]["9001"].encode('utf-8')))
 
 if __name__ == "__main__":
     main()
